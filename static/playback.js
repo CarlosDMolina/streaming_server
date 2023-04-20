@@ -9,6 +9,8 @@ function updateFrame() {
     frameIndex = (frameIndex + 1) % totalFrames;
 }
 
+updateFrame();
+
 function startPlayback() {
     if (playbackInterval) {
         clearInterval(playbackInterval);
