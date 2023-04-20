@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from preprocess import *
 
 app = Flask(__name__)
 
@@ -8,5 +9,11 @@ def index():
     return render_template('index.html')
 
 
-if __name__ == '__main__':
+def start_app():
     app.run(debug=True)
+
+
+if __name__ == '__main__':
+
+    # Start the Flask app after preprocessing is done
+    start_app()
