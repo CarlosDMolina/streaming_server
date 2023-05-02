@@ -12,7 +12,7 @@ def process_frame(args):
     img = cv2.imread(file_path)
     quadtree.insert(img, res)
     processed_frame = quadtree.reconstruct_image()
-    newfile = f'{destination_path}/{filename}'
+    newfile = os.path.join(destination_path, filename)
     cv2.imwrite(newfile, processed_frame)
 
 
@@ -25,7 +25,7 @@ def process_frames(folder_path, destination_path, res):
         for filename in os.listdir(folder_path):
             file_path = os.path.join(folder_path, filename)
             img = cv2.imread(file_path)
-            newfile = f'{destination_path}/{filename}'
+            newfile = os.path.join(destination_path, filename)
             cv2.imwrite(newfile, img)
         return "success"
     else:
@@ -48,9 +48,7 @@ def process_video():
     frame_folder = 'static/frames'
     dest = 'static/processed_frames'
     res = 100 - int(request.args.get('bandwidth', 0))
-    msg = process_frames(frame_folder, dest, res)
-
-    return msg
+    return process_frames(frame_folder, dest, res)
 
 
 if __name__ == '__main__':
