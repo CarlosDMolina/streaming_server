@@ -10,6 +10,21 @@
 </head>
 <body>
     <div class="container">
+        <h1>Instructions</h1>
+        <ol>
+            <li>Choose the Bandwidth amount with the slider.</li>
+            <ul>Bandwidth amounts range from:
+                <li>0% to 100% in steps of 10</li>
+                <li>This value controls the amount of approximation in the quadtrees</li>
+                <li>100% just returns the original video</li>
+                <li><i><b>Warning: 90% takes about 3 minutes to complete because of the computation cost of making large quadtrees for each frame.</b></i></li>         
+            </ul>
+            <li>Press the Process Button.</li>
+            <li>Video will play automatically once processed.</li>
+            <li>For best results, reload the page before processing with a different bandwidth amount.</li>
+        </ol>
+    </div>
+    <div class="container">
         <h1>Video Streaming</h1>
         <img id="framePlayer" alt="Frames" class="video" src="static/frames/frame_0000.jpg">
         <br>
@@ -17,7 +32,41 @@
         <button onclick="stopPlayback()">Stop Playback</button>
         <br>
         <label for="bandwidthSlider">Network Bandwidth:</label>
-        <input type="range" id="bandwidthSlider" min="1" max="100" value="100">
+        <input type="range" id="bandwidthSlider" min="0" max="100" step="10" value="100">
+        <br>
+        <button class='button' id="process-btn">Process Video</button>
     </div>
+    
+
+    <script>
+        let videoProcessed = false;
+    
+        document.getElementById('process-btn').onclick = function() {
+            videoProcessed = false;
+            const bandwidth = document.getElementById('bandwidthSlider').value;
+            fetch('/process_video?bandwidth=' + bandwidth)
+                .then(response => response.text())
+                .then(data => {
+                    if (data === "success") {
+                        console.log("Video processed successfully");
+                        videoProcessed = true;
+                        framePath = "static/processed_frames/";
+                        frameIndex = 0;
+                        clearInterval(playbackInterval);
+                        playbackInterval = setInterval(playFrame, 1000 / frameRate);
+                    } else {
+                        console.log("Video processing failed");
+                    }
+                });
+        };
+    
+        document.getElementById('start-playback-btn').onclick = function() {
+            if (videoProcessed) {
+                startPlayback();
+            } else {
+                alert("Please process the video first or allow for the video to finish processing.");
+            }
+        };
+    </script>
 </body>
 </html>

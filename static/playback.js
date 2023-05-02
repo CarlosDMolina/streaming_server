@@ -1,26 +1,26 @@
 // playback.js
+let frameCount = 150;
 let frameIndex = 0;
 let playbackInterval;
+const frameRate = 30;
+let framePath = "static/processed_frames/";
 
-function updateFrame() {
-    const totalFrames = 150
-    const img = document.getElementById('framePlayer');
-    img.src = 'static/frames/frame_' + String(frameIndex).padStart(4, '0') + '.jpg';
-    frameIndex = (frameIndex + 1) % totalFrames;
+function playFrame() {
+    const framePlayer = document.getElementById("framePlayer");
+    framePlayer.src = framePath + "frame_" + String(frameIndex).padStart(4, "0") + ".jpg";
+    frameIndex = (frameIndex + 1) % frameCount;
 }
 
-updateFrame();
-
 function startPlayback() {
-    if (playbackInterval) {
-        clearInterval(playbackInterval);
+    if (!videoProcessed) {
+        alert("Please process the video first or allow video to finish processing.");
+        return;
     }
-    frameIndex = 0;
-    playbackInterval = setInterval(updateFrame, 1000 / 30); // Adjust the number 30 to match your desired frame rate
+
+    clearInterval(playbackInterval);
+    playbackInterval = setInterval(playFrame, 1000 / frameRate);
 }
 
 function stopPlayback() {
-    if (playbackInterval) {
-        clearInterval(playbackInterval);
-    }
+    clearInterval(playbackInterval);
 }
