@@ -35,7 +35,7 @@ def main():
     delay = int(1000 / fps)
 
     max_levels = 5
-    cv2.createTrackbar('Levels', 'video', 1, max_levels, on_change)
+    cv2.createTrackbar('Levels', 'Video', 0, max_levels, on_change)
 
     while True:
         ret, frame = cap.read()
@@ -43,7 +43,7 @@ def main():
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
             continue
 
-        levels = cv2.getTrackbarPos('Levels', 'video')
+        levels = cv2.getTrackbarPos('Levels', 'Video')
 
         laplacian_pyramid, _ = build_laplacian_pyramid(frame, levels)
         laplacian_frame = laplacian_pyramid[-1]
@@ -54,7 +54,7 @@ def main():
             laplacian_frame = cv2.add(
                 laplacian_frame[:h, :w], laplacian_pyramid[i])
 
-        cv2.imshow('video', laplacian_frame)
+        cv2.imshow('Video', laplacian_frame)
 
         key = cv2.waitKey(delay) & 0xFF
         if key == ord('q'):
