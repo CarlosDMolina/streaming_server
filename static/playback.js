@@ -1,5 +1,5 @@
 // playback.js
-let frameCount = 150;
+const frameCount = 150;
 let frameIndex = 0;
 let playbackInterval;
 const frameRate = 30;
