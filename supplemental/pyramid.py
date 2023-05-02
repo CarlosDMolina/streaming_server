@@ -29,7 +29,7 @@ def on_change(x):
 
 def main():
     cap = cv2.VideoCapture('surf.mp4')
-    cv2.namedWindow('video', cv2.WINDOW_NORMAL)
+    cv2.namedWindow('Video', cv2.WINDOW_NORMAL)
 
     fps = int(cap.get(cv2.CAP_PROP_FPS))
     delay = int(1000 / fps)
