@@ -1,4 +1,4 @@
-from Quadtree import *
+from quadtree import *
 from flask import Flask, request, render_template
 import os
 from concurrent.futures import ProcessPoolExecutor

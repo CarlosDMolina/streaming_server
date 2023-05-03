@@ -1,5 +1,5 @@
 import cv2
-from Quadtree import *
+from quadtree import *
 from concurrent.futures import ProcessPoolExecutor
 
 
